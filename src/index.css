@@ -1,0 +1,9 @@
+@tailwind base;
+/* Override base SVG style to work with Ant Design 
+https://stackoverflow.com/questions/60853067/how-to-solve-ant-design-base-css-and-tailwindcss-base-css-alignments-problem
+*/
+svg {
+    vertical-align: initial;
+  }
+@tailwind components;
+@tailwind utilities;
