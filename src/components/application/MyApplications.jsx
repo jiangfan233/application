@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import { GetApplications } from "/fakeData/fakeApplications.js";
 import { GetClassInfoById } from "/fakeData/fakeClassInfo.js";
+import ProcessInfo from "./ProcessInfo";
 
 const columns = [
   {
@@ -40,6 +41,7 @@ const columns = [
       </Link>
     ),
   },
+  // Table.EXPAND_COLUMN,
 ];
 
 function getProcessStatus(textNumber) {
@@ -57,7 +59,7 @@ const MyApplications = () => {
 
   function getNameById(id) {
     // 这里应该根据用户ID返回姓名
-    return id
+    return id;
   }
 
   function genrateData(applications) {
@@ -76,7 +78,18 @@ const MyApplications = () => {
     } else {
       const applications = GetApplications();
       return (
-        <Table columns={columns} dataSource={genrateData(applications)} />
+        <Table
+          columns={columns}
+          dataSource={genrateData(applications)}
+          expandable={{
+            expandedRowRender: (record) => (
+              <ProcessInfo
+                applicationId={record.id}
+              />
+            ),
+            rowExpandable: (record) => record.id,
+          }}
+        />
       );
     }
   }

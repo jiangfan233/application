@@ -1,0 +1,26 @@
+注意事项：
+  1、src/tailwind.css 应有 
+    /* src/tailwind.css */
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+  2、npm install postcss-import
+  3、创建 postcss.config.js
+    module.exports = {
+      plugins: [
+        require('postcss-import'),
+        require('tailwindcss'),
+        require('autoprefixer'),
+      ]
+    }
+  4、创建 tailwind.config.css,并开启 jit 模式(加快加载速度)
+    module.exports = {
+      mode: "jit",
+      content: ["./src/**/*.{js,jsx,ts,tsx}"],
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+      important: true,
+    };
+  5、在 mount-node 处导入 tailwind.css;如果需导入其他css,可设置global.css

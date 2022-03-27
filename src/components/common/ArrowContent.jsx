@@ -9,11 +9,8 @@ const ArrowContent = ({ children: Component }) => {
   };
 
   const showArrow = () => {
-    return hideContent ? (
-      <LeftOutlined className="bg-gray-300  p-3 mr-2 shadow-sm shadow-gray-300" />
-    ) : (
-      <RightOutlined className="bg-gray-300  p-3 mr-2 shadow-sm shadow-gray-300" />
-    );
+    const Comp = hideContent ? LeftOutlined : RightOutlined;
+    return <Comp className="bg-gray-300  p-3 mr-2 shadow-sm shadow-gray-300" />;
   };
 
   return (
