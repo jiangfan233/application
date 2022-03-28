@@ -10,7 +10,11 @@ const options = GetClassInfos();
 
 // onChange: 通知上层组件本组件值发生变化，并更新上层组件中对应的值
 // value: 本组件从上层组件中获取对应的值
-const CascaderComponent = ({ value: classId, onChange: setFormFieldValue }) => {
+const CascaderComponent = ({
+  value: classId,
+  onChange: setFormFieldValue,
+  ...rest
+}) => {
   const [val, setVal] = useState(classId);
   const [processInfo, setProcessInfo] = useState("");
 
@@ -52,6 +56,7 @@ const CascaderComponent = ({ value: classId, onChange: setFormFieldValue }) => {
         displayRender={(label) => label.join("/")}
         onChange={handleClassChange}
         value={val}
+        {...rest}
       />
       <br />
       {processInfo && (

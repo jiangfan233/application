@@ -69,15 +69,20 @@ const ApplicationDisplay = () => {
           onValuesChange={handleValuesChange}
           onFinish={handleSubmit}
         >
-          {renderFormItem("title", "标题:", <Input size="large" />, {
-            labelCol: { style: { width: "5em" } },
-          })}
+          {renderFormItem(
+            "title",
+            "标题:",
+            <Input size="large" disabled={params && params.id} />,
+            {
+              labelCol: { style: { width: "5em" } },
+            }
+          )}
 
           <div className="flex items-start flex-col place-content-start sm:flex-row sm:place-content-between">
             {renderFormItem(
               "transactionClassId",
               "事务分类:",
-              <CascaderComponent />,
+              <CascaderComponent disabled={params && params.id} />,
               { className: "w-full sm:w-auto sm:max-w-md" }
             )}
 
@@ -106,7 +111,12 @@ const ApplicationDisplay = () => {
           {renderFormItem(
             "transactionDesc",
             "事务描述:",
-            <TextArea className="h-40" maxLength={255} showCount />,
+            <TextArea
+              disabled={params && params.id}
+              className="h-40"
+              maxLength={255}
+              showCount
+            />,
             { labelCol: { style: { width: "5em" } } }
           )}
           {renderFormItem("fileIds", "附件:", <UploadComponent />, {

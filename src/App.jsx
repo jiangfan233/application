@@ -13,7 +13,6 @@ moment.locale("zh-cn");
 
 const App = () => {
   const [bgColor, setBgColor] = useState("bg-white");
-  const [position, setPosition] = useState("absolute buttom-0 left-0");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,14 +24,14 @@ const App = () => {
 
   const role = localStorage.getItem("role");
   return (
-    <div className={bgColor + " min-h-screen"}>
+    <div className={bgColor + " min-h-screen relative"}>
       <div className="w-full lg:w-3/4  mx-auto shadow-lg shadow-gray-400 ">
         <div className="h-auto mb-1">
           <Navbar />
         </div>
         {role ? <Outlet /> : <Login />}
       </div>
-      <div className={position}>
+      <div className="absolute bottom-0 left-0">
         <ColorBar setColor={setBgColor} />
       </div>
     </div>
