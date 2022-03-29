@@ -24,8 +24,8 @@ const CascaderComponent = ({
       console.log("classId:", classId);
       setVal(classId);
       const processId = GetClassInfoById(classId).processId;
-      const processInfo = GetProcessInfoById(processId).info;
-      setProcessInfo(processInfo.map((item) => item.processorName).join(" - "));
+      const pInfo = GetProcessInfoById(processId).info;
+      setProcessInfo(pInfo.map((item) => item.roleId).join(" - "));
     }
   });
 
@@ -36,8 +36,9 @@ const CascaderComponent = ({
       setVal(optionArr);
       // 通知上层组件，并更新值(value)
       setFormFieldValue(selectedClass.id);
-      const processInfo = GetProcessInfoById(selectedClass.processId).info;
-      setProcessInfo(processInfo.map((item) => item.processorName).join(" - "));
+      const pInfo = GetProcessInfoById(selectedClass.processId).info;
+
+      setProcessInfo(pInfo.map((item) => item.roleId).join(" - "));
     } else {
       // 如果清除了所选类别
       setVal("");

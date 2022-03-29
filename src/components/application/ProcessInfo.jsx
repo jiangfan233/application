@@ -4,7 +4,6 @@ import { GetApplicationById } from "../../../fakeData/fakeApplications";
 import { GetClassInfoById } from "../../../fakeData/fakeClassInfo";
 import { GetProcessInfoById } from "../../../fakeData/fakeProcessInfo";
 import StepsComponent from "./../common/StepsComponent";
-import { Button } from "antd";
 import { renderButton } from "../common/ButtonComponent";
 
 // 获取当前步骤的描述性信息
@@ -70,7 +69,7 @@ const ProcessInfo = ({ applicationId, ...rest }) => {
     if (!app) {
       return <Navigate to={"/not-found"} replace />;
     } else {
-      const processInfo = getProcessInfoByClassId(app.classId);
+      const processInfo = getProcessInfoByClassId(app.appClassId);
       const stepsObj = genStepsObj(
         processInfo,
         app.status,
@@ -82,11 +81,17 @@ const ProcessInfo = ({ applicationId, ...rest }) => {
             current={app.processCurrentId}
             itemList={processInfo}
             itemKey="stepId"
-            itemTitle={"processorName"}
+            itemTitle={"roleId"}
             itemDescObj={stepsObj["stepsDescObj"]}
             itemStatusObj={stepsObj["stepsStatusObj"]}
             direction={params.id ? "vertical" : "horizontal"}
             progressDot={params.id ? false : true}
+            type={params.id ? "default" : "navigation"}
+            className={
+              params.id ? "" : "w-auto flex flex-wrap justify-center my-1"
+            }
+            // 直接用 {false} 会产生警告
+            responsive= {1 === 2}
           />
           {params.id &&
             renderButton("primary", "返回", {

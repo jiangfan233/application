@@ -12,7 +12,7 @@ export default FormItemComponent;
 
 export const renderFormItem = (name, label, Children, rest) => {
   return (
-    <Form.Item name={name} label={label} {...rest}>
+    <Form.Item key={name} name={name} label={label} {...rest}>
       {Children}
     </Form.Item>
   );

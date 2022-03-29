@@ -1,11 +1,11 @@
 
 // 根据userId获取用户部门
-export const getDepartmentByUserId = (userId) => {
+export const getDepartmentNameByUserId = (userId) => {
   return userId
 } 
 
 // 根据用户ID 获取用户名
-export const getNameFromUserId = (userId) => {
+export const getUsernameById = (userId) => {
   return userId
 }
 

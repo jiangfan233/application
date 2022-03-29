@@ -66,7 +66,7 @@ const MyApplications = () => {
     for (let i = 0; i < applications.length; i++) {
       const item = applications[i];
       item.key = item.id;
-      item.class = GetClassInfoById(item.classId).className;
+      item.class = GetClassInfoById(item.appClassId).className;
       item.name = getNameById(item.applicantId);
     }
     return applications;

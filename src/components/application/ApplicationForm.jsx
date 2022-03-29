@@ -1,19 +1,24 @@
 import React, { useEffect } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import { Form, Input } from "antd";
-import CascaderComponent from "../common/CascaderComponent";
-import UploadComponent from "../common/UploadComponent";
-import ArrowContent from "../common/ArrowContent";
+import { Form } from "antd";
 import { renderFormItem } from "../common/FormItemComponent";
-import { renderButton } from "../common/ButtonComponent";
 import { GetApplicationById } from "../../../fakeData/fakeApplications";
-import { getDepartmentByUserId, getNameFromUserId } from "../../utils/common";
-
-const { TextArea } = Input;
+import { getDepartmentNameByUserId, getUsernameById } from "../../utils/common";
+import { AppFormViewFieldConfig } from "./AppFormViewFieldConfig";
+import _ from "lodash";
 
 const ApplicationDisplay = () => {
   const [form] = Form.useForm();
   const params = useParams();
+  const formRows = [
+    // 应与 AppFormViewFieldConfig 中的 key 保持一致(数量、名称)
+    // name对应 Form.Item 的 name 属性
+    // config: 对应 Form.Item 子组件child 的相关属性
+    { name: "title", config: { className: "text-center font-bold" } },
+    { name: "appClassId", config: { className: "w-fit" } },
+    { name: "appDescription", config: { className: "h-40" } },
+    { name: "appFields", config: "" },
+  ];
 
   const handleSave = (values) => {
     console.log(values);
@@ -28,19 +33,7 @@ const ApplicationDisplay = () => {
     form.setFieldsValue(currentFieldValue);
   };
 
-  // 用于把 application 的数据格式一一映射到form上
-  const appMaptoField = (app) => {
-    return {
-      title: app.title,
-      applicant: getNameFromUserId(app.applicantId),
-      department: getDepartmentByUserId(app.applicantId),
-      applicationDate: app.date,
-      transactionClassId: app.classId,
-      transactionDesc: app.description,
-      fileIds: app.fileIds,
-    };
-  };
-
+  // 此申请 之前申请过，需要加载原Form数据
   const setFormData = (params) => {
     if (params && params.id) {
       const app = GetApplicationById(params.id);
@@ -48,9 +41,19 @@ const ApplicationDisplay = () => {
         // 如果applicationId找不到
         return <Navigate to={"/not-found"} replace />;
       }
-      // 此申请 之前申请过，需要加载原Form数据
-      form.setFieldsValue(appMaptoField(app));
+      formRows.map((item) =>
+        form.setFieldsValue({ [item.name]: app[item.name] })
+      );
     }
+  };
+
+  // 使Form 表单 label 对齐,并返回 labelCol 属性 object
+  // 根据 formRows 获取所有label的长度，并计算最大值
+  const calFormItemLabelCol = (viewFields, keys, label) => {
+    const len = _.max(
+      keys.map((item) => _.get(viewFields, item, label).length)
+    );
+    return { labelCol: { style: { width: len + "em" } } };
   };
 
   useEffect(() => {
@@ -58,9 +61,19 @@ const ApplicationDisplay = () => {
   });
 
   return (
-    <div className="bg-white">
-      <h1 className="text-2xl font-bold text-center">事务申请表</h1>
-      <div className="mx-2">
+    <div className="bg-white pb-2">
+      <div className="flex justify-center items-center">
+        <h1 className="my-auto text-2xl font-bold text-center">事务申请表</h1>
+        <div className="tooltip">
+          <span className="tip-icon">&#33;</span>
+          <div className="tip-message">
+            <p className="w-max my-1">王二</p>
+            <p className="w-max my-1">黄金时代</p>
+            <p className="w-max my-1">小和尚</p>
+          </div>
+        </div>
+      </div>
+      <div className="mx-2 mt-1">
         <Form
           className="w-full"
           labelAlign="right"
@@ -69,67 +82,23 @@ const ApplicationDisplay = () => {
           onValuesChange={handleValuesChange}
           onFinish={handleSubmit}
         >
-          {renderFormItem(
-            "title",
-            "标题:",
-            <Input size="large" disabled={params && params.id} />,
-            {
-              labelCol: { style: { width: "5em" } },
-            }
-          )}
-
-          <div className="flex items-start flex-col place-content-start sm:flex-row sm:place-content-between">
-            {renderFormItem(
-              "transactionClassId",
-              "事务分类:",
-              <CascaderComponent disabled={params && params.id} />,
-              { className: "w-full sm:w-auto sm:max-w-md" }
-            )}
-
-            <ArrowContent className="p-2">
-              <div>
-                {renderFormItem("applicant", "申请人:", <Input disabled />, {
-                  labelCol: { style: { width: "5em" } },
-                  className: "mb-auto !importment",
-                })}
-                {renderFormItem("department", "部门:", <Input disabled />, {
-                  labelCol: { style: { width: "5em" } },
-                  className: "mb-auto !importment",
-                })}
-                {renderFormItem(
-                  "applicationDate",
-                  "申请日期:",
-                  <Input disabled />,
-                  {
-                    labelCol: { style: { width: "5em" } },
-                    className: "mb-auto !importment",
-                  }
-                )}
-              </div>
-            </ArrowContent>
-          </div>
-          {renderFormItem(
-            "transactionDesc",
-            "事务描述:",
-            <TextArea
-              disabled={params && params.id}
-              className="h-40"
-              maxLength={255}
-              showCount
-            />,
-            { labelCol: { style: { width: "5em" } } }
-          )}
-          {renderFormItem("fileIds", "附件:", <UploadComponent />, {
-            labelCol: { style: { width: "5em" } },
+          {formRows.map((row) => {
+            const rowData = AppFormViewFieldConfig[row.name];
+            rowData.childConfig = {
+              disabled: params && params.id,
+              ...row.config,
+            };
+            return renderFormItem(
+              row.name,
+              rowData.label,
+              <rowData.child {...rowData.childConfig} />,
+              (rowData.formItemConfig = calFormItemLabelCol(
+                AppFormViewFieldConfig,
+                formRows,
+                "label"
+              ))
+            );
           })}
-
-          <div className="flex flex-row justify-end space-x-2 p-2">
-            {renderButton("default", "保存", {
-              htmlType: "submit",
-              onClick: handleSave,
-            })}
-            {renderButton("primary", "提交", { htmlType: "submit" })}
-          </div>
         </Form>
       </div>
     </div>

@@ -3,7 +3,46 @@
 https://stackoverflow.com/questions/60853067/how-to-solve-ant-design-base-css-and-tailwindcss-base-css-alignments-problem
 */
 svg {
-    vertical-align: initial;
-  }
+  vertical-align: initial;
+}
 @tailwind components;
+
+.tooltip {
+  @apply relative;
+}
+
+.tooltip :hover + .tip-message {
+  @apply opacity-100;
+}
+
+.tip-icon {
+  width: 1rem;
+  height: 1rem;
+  @apply flex text-gray-600 font-normal px-1
+  ml-2 mt-2 font-medium  items-center
+  leading-4 bg-slate-300 rounded-lg;
+}
+
+.tip-message::before {
+  position: absolute;
+  content: "";
+  padding: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  left: 2em;
+  top: -0.5em;
+  @apply bg-gray-400 flex
+  transform rotate-45;
+  /* opacity: 0; */
+}
+
+.tip-message {
+  left: -1.5em;
+  @apply absolute flex flex-wrap
+  max-w-xs h-auto z-10 bg-gray-400
+  justify-center p-2 mt-2
+  rounded-xl
+  opacity-0;
+}
+
 @tailwind utilities;

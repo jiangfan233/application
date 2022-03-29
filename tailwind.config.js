@@ -6,4 +6,10 @@ module.exports = {
   },
   plugins: [],
   important: true,
+  variants: {
+    extend: {
+      // ...
+     transform: ['hover', 'focus'],
+    }
+  }
 };
