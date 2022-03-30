@@ -7,42 +7,50 @@ svg {
 }
 @tailwind components;
 
-.tooltip {
-  @apply relative;
+:root {
+  --trangle-len: 1em;
 }
 
-.tooltip :hover + .tip-message {
-  @apply opacity-100;
+.tooltip {
+  @apply relative 
+  flex flex-col items-center justify-between;
 }
 
 .tip-icon {
-  width: 1rem;
-  height: 1rem;
-  @apply flex text-gray-600 font-normal px-1
-  ml-2 mt-2 font-medium  items-center
-  leading-4 bg-slate-300 rounded-lg;
+  width: 1em;
+  height: 1em;
+  @apply flex relative items-center justify-center
+  text-gray-600 font-normal p-1
+  font-medium cursor-pointer  mx-1
+  bg-slate-300 rounded-lg;
+}
+.tip-icon:hover {
+  @apply bg-slate-400;
+}
+.tip-icon:hover + .tip-message {
+  transition: 0.8s ease;
+  @apply opacity-100 visible;
 }
 
 .tip-message::before {
   position: absolute;
   content: "";
-  padding: 0.5rem;
-  width: 1rem;
-  height: 1rem;
-  left: 2em;
-  top: -0.5em;
+  width: 1em;
+  height: 1em;
+  left: calc(50%- var(--trangle-len) /2);
+  top: -0.3em;
   @apply bg-gray-400 flex
   transform rotate-45;
-  /* opacity: 0; */
 }
 
 .tip-message {
-  left: -1.5em;
+  top: calc(100% + var(--trangle-len) /2);
+  min-width: 10em;
   @apply absolute flex flex-wrap
-  max-w-xs h-auto z-10 bg-gray-400
-  justify-center p-2 mt-2
-  rounded-xl
-  opacity-0;
+  h-fit z-10 bg-gray-400
+  justify-center max-w-fit
+  rounded-xl w-auto p-1;
+  opacity: 0;
 }
 
 @tailwind utilities;

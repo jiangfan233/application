@@ -10,10 +10,10 @@ const ButtonComponent = ({ type, label, ...rest }) => {
 
 export default ButtonComponent;
 
-export const renderButton = (type, label, rest) => {
+export const renderButton = (key, type, label, onClick, rest) => {
   return (
-    <Button type={type} {...rest}>
+    <Button key={key} type={type} onClick={onClick} {...rest}>
       {label}
     </Button>
   );
-} 
+};

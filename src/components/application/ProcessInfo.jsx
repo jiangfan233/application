@@ -91,11 +91,10 @@ const ProcessInfo = ({ applicationId, ...rest }) => {
               params.id ? "" : "w-auto flex flex-wrap justify-center my-1"
             }
             // 直接用 {false} 会产生警告
-            responsive= {1 === 2}
+            responsive={1 === 2}
           />
           {params.id &&
-            renderButton("primary", "返回", {
-              onClick: () => navigate(-1),
+            renderButton("goback", "primary", "返回", () => navigate(-1), {
               className: "m-2",
             })}
         </div>

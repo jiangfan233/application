@@ -63,13 +63,7 @@
             labelCol: { style: { width: "7em" } },
           })}
 
-          <div className="flex flex-row justify-end space-x-2 p-2">
-            {renderButton("default", "保存", {
-              htmlType: "submit",
-              onClick: handleSave,
-            })}
-            {renderButton("primary", "提交", { htmlType: "submit" })}
-          </div>
+          
         </Form>
       </div>
     </div>
