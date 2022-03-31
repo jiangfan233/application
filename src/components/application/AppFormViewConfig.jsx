@@ -38,24 +38,37 @@ export const AppFormViewFieldConfig = [
 ];
 
 // 用于配置 ApplicatinForm 表单中的按钮
+// 关于 htmlType: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
 export const AppBtnsConfig = [
   {
     name: "resetAll",
-    type: "default",
+    type: "danger",
     label: "清空",
-    onClick: (form) => form.reset(),
+    onClick: () => {},
+    rest: {
+      htmlType: "reset",
+      className: "mx-2 relative sm:absolute sm:left-0",
+    },
   },
   {
     name: "endorse",
     type: "default",
     label: "加签",
     onClick: () => console.log("加签"),
+    rest: {
+      htmlType: "button",
+      className: "mx-2 sm:mr-12",
+    },
   },
   {
     name: "save",
     type: "default",
     label: "保存",
     onClick: () => {},
+    rest: {
+      htmlType: "submit",
+      className: "mx-2",
+    },
   },
   {
     name: "submit",
@@ -64,6 +77,7 @@ export const AppBtnsConfig = [
     onClick: () => {},
     rest: {
       htmlType: "submit",
+      className: "mx-2",
     },
   },
 ];

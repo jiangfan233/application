@@ -21,12 +21,24 @@ const ApplicationForm = () => {
   // formView : formRows
   // params: params
   const setFormView = (formView, params) => {
-    const labelCol = calFormItemLabelCol(formView, "label");
+    const labelCol = {
+      labelCol: {
+        style: { width: calFormItemLabelWidth(formView, "label", "em") },
+      },
+    };
     formView.map((item) => {
       item.childConfig["disabled"] = params && params.id;
       item.formItemConfig = labelCol;
     });
     return formView;
+  };
+
+  // 使Form 表单 label 对齐,并返回 labelCol 属性 object
+  // 根据 formRows 获取所有label的长度，并计算最大值
+  // 单位
+  const calFormItemLabelWidth = (formView, label, unit) => {
+    const len = _.max(formView.map((item) => item[label].length));
+    return len + unit;
   };
 
   // 此申请 之前申请过，需要加载原Form数据
@@ -41,13 +53,6 @@ const ApplicationForm = () => {
         form.setFieldsValue({ [item.name]: app[item.name] })
       );
     }
-  };
-
-  // 使Form 表单 label 对齐,并返回 labelCol 属性 object
-  // 根据 formRows 获取所有label的长度，并计算最大值
-  const calFormItemLabelCol = (formView, label) => {
-    const len = _.max(formView.map((item) => item[label].length));
-    return { labelCol: { style: { width: len + "em" } } };
   };
 
   useEffect(() => {
@@ -86,7 +91,7 @@ const ApplicationForm = () => {
               row.formItemConfig
             );
           })}
-          {<FormButtons btnConfigs={AppBtnsConfig} />}
+          {!params.id && <FormButtons btnConfigs={AppBtnsConfig} />}
         </Form>
       </div>
     </div>
