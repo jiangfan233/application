@@ -5,11 +5,11 @@ import { renderFormItem } from "../common/FormItemComponent";
 import TooltipComponent from "../common/TooltipComponent";
 import FormButtons from "./FormButtons";
 import { GetApplicationById } from "../../../fakeData/fakeApplications";
-import { getDepartmentNameByUserId, getUsernameById } from "../../utils/common";
 import { AppFormViewFieldConfig, AppBtnsConfig } from "./AppFormViewConfig";
 import _ from "lodash";
 
 const LazyComp = lazy(() => import("./UserInfo"));
+import ApprovalDetails from "./ApprovalDetails";
 
 const ApplicationForm = () => {
   const [form] = Form.useForm();
@@ -93,6 +93,7 @@ const ApplicationForm = () => {
           })}
           {!params.id && <FormButtons btnConfigs={AppBtnsConfig} />}
         </Form>
+        {params.id && <ApprovalDetails applicationId={params.id} />}
       </div>
     </div>
   );

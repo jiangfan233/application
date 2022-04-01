@@ -4,22 +4,22 @@ const ProcessInfos = [
     info: [
       {
         stepId: 0,
-        userId: "",
+        userId: "ID",
         roleId: "applicant",
       },
       {
         stepId: 1,
-        userId: "",
+        userId: "ID",
         roleId: "张三",
       },
       {
         stepId: 2,
-        userId: "",
+        userId: "ID",
         roleId: "李四",
       },
       {
         stepId: 3,
-        userId: "",
+        userId: "ID",
         roleId: "王五",
       },
     ],
@@ -29,27 +29,27 @@ const ProcessInfos = [
     info: [
       {
         stepId: 0,
-        userId: "",
+        userId: "ID",
         roleId: "applicant",
       },
       {
         stepId: 1,
-        userId: "",
+        userId: "ID",
         roleId: "猪八戒",
       },
       {
         stepId: 2,
-        userId: "",
+        userId: "ID",
         roleId: "大师兄",
       },
       {
         stepId: 3,
-        userId: "",
+        userId: "ID",
         roleId: "玉皇大帝",
       },
       {
         stepId: 4,
-        userId: "",
+        userId: "ID",
         roleId: "太上老君",
       },
     ],
@@ -91,16 +91,15 @@ const ProcessInfos = [
         stepId: 6,
         userId: "",
         roleId: "财务出纳",
-      }
+      },
     ],
   },
 ];
 
-
 export function GetProcessInfos() {
-    return ProcessInfos;
+  return ProcessInfos;
 }
 
 export function GetProcessInfoById(id) {
-  return ProcessInfos.find(p => p.id === id)
+  return ProcessInfos.find((p) => p.id === id);
 }
